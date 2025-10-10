@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Public/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/Singer Website/Public/style.css" />
     <title>Website Navbar</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- Navigation -->
 
     <div class="nav-container">
-        <nav class="navbar">
-            <h2 id="navbar-logo">IMRAN KHAN</h2>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+      <nav class="navbar">
+        <h2 id="navbar-logo">IMRAN KHAN</h2>
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
 
-            <ul class="nav-menu">
-                <li><a href="./index.html" class="nav-links">Home</a></li>
-                <li><a href="./about.html" class="nav-links">About</a></li>
-                <li><a href="./songs.html" class="nav-links">Songs</a></li>
-            </ul>
-        </nav>
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-links">Home</a></li>
+          <li><a href="./about.html" class="nav-links">About</a></li>
+          <li><a href="./songs.html" class="nav-links">Songs</a></li>
+        </ul>
+      </nav>
     </div>
 
     <!-- Sign up Section -->
@@ -35,20 +33,24 @@
 
     <!-- for form container -->
     <div class="container1">
-        <form>
+      <form>
+        <div class="form-item">
+          <input type="text" name="name" id="name" placeholder="Full Name" />
+        </div>
 
-            <div class="form-item">
-                <input type="text" name="name" id="name" placeholder="Full Name">
-            </div>
-
-            <div class="form-item">
-                <input type="text" name="email" id="email" placeholder="Email Address">
-            </div>
-            <p id='message'></p>
-            <button type="submit" id="submit">Submit</button>
-
-        </form>
+        <div class="form-item">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+          />
+        </div>
+        <p id="message"></p>
+        <button type="submit" id="submit">Submit</button>
+      </form>
     </div>
 
-    <script src="/JavaScript/app.js"></script>
-</body>
+    <script src="/Singer Website/JavaScript/app.js"></script>
+  </body>
+</html>

@@ -44,18 +44,20 @@
 ## 📄 Table of Contents
 
 - [Overview](#overview)
+- [UI Preview](#ui-preview)
+- [Features](#key-features)
+- [Project Structure](#project-structure)
+  - [Project Index](#project-index)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Usage](#usage)
   - [Testing](#testing)
-- [Features](#features)
-- [Project Structure](#project-structure)
-  - [Project Index](#project-index)
+- [Learning Outcomes](#learning-outcomes)
 - [Roadmap](#roadmap)
-- [Contributing](#contributing)
+- [Contributors](#contributors)
+- [Acknowledgments](#acknowledgment)
 - [License](#license)
-- [Acknowledgment](#acknowledgment)
 
 ---
 
@@ -279,6 +281,8 @@ echo 'INSERT-INSTALL-COMMAND-HERE'
 Run the project with:
 
 echo 'INSERT-RUN-COMMAND-HERE'
+
+<a id="testing"></a>
 
 ### 🧪 Testing
 

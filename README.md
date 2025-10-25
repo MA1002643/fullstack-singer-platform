@@ -112,13 +112,31 @@ This project simplifies building interactive singer websites with core features 
 
 ```sh
 └── fullstack-singer-platform/
-    ├── Singer Website
-    │   ├── .DS_Store
-    │   ├── .vscode
-    │   ├── HTML
-    │   ├── JavaScript
-    │   └── Public
-    └── index.html
+├── Singer Website/
+│   ├── HTML/
+│   │   ├── about.html
+│   │   ├── sign-up.html
+│   │   └── songs.html
+│   ├── JavaScript/
+│   │   └── app.js
+│   └── Public/
+│       ├── images/
+│       │   ├── Background_image.jpg
+│       │   ├── image1.jpg
+│       │   ├── image2.jpg
+│       │   ├── image3.jpg
+│       │   ├── image4.jpg
+│       │   ├── image5.jpg
+│       │   ├── image6.jpg
+│       │   ├── image7.jpg
+│       │   └── test_image.jpeg
+│       └── style.css
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── index.html
+├── LICENSE
+├── README.md
+└── SECURITY.md
 ```
 
 ---

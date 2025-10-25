@@ -65,18 +65,20 @@
 
 ## ✨ Overview
 
-fullstack-singer-platform is a versatile developer toolkit designed to streamline the creation of engaging, multimedia-rich singer websites. It offers a structured architecture with multiple pages, dynamic interactions, and seamless responsiveness to deliver an immersive user experience.
+It is a **static, multi-page** project using **HTML, CSS, and JavaScript**, with dedicated pages (**About**, **Songs**, **Sign-Up**), shared styles, and a lightweight script for basic interactions and responsiveness.
 
-**Why fullstack-singer-platform?**
+### Why fullstack-singer-platform?
 
-This project simplifies building interactive singer websites with core features including:
+This project is a interactive singer websites with core features including:
 
-- **🧩** Responsive Navigation: Ensures smooth user navigation across all devices with mobile-friendly menus.
-- **🎥** Multimedia Integration: Embeds YouTube videos and visual content to showcase songs and artist info.
-- **📝** User Sign-Up: Facilitates user registration for subscriptions or mailing lists, supporting engagement.
-- **⚙️** Dynamic UI & Server Communication: Handles real-time updates and data fetching for a seamless experience.
-- **🌟** Multi-Page Structure: Organizes content into About, Songs, and Sign Up pages for easy navigation.
-- **🎨** Visually Appealing Design: Combines styling and scripting for an attractive, user-friendly interface.
+- 🧩 **Responsive Navigation:** Mobile-friendly layout and menus for smooth navigation across devices.
+- 🎥 **Multimedia Integration:** Easy embedding of **YouTube** videos and images to showcase songs and artist visuals.
+- 📝 **User Sign-Up (Front-End Only):** A sign-up page/form suitable for newsletters or waitlists.  
+  _Note: The repository does not include backend/authentication code._
+- ⚙️ **Lightweight UI Interactions:** Basic DOM manipulation via a single `app.js` script.  
+  _Note: There is no server or database layer in this repository._
+- 🌟 **Multi-Page Structure:** Clear IA with **About**, **Songs**, and **Sign-Up** pages.
+- 🎨 **Consistent Styling:** Centralized CSS (`Singer Website/Public/style.css`) and image assets under `Singer Website/Public/images/`.
 
 ---
 
@@ -94,17 +96,18 @@ This project simplifies building interactive singer websites with core features 
 
 ## 📌 Features
 
-|     | Component         | Details                                                                                                             |
-| :-- | :---------------- | :------------------------------------------------------------------------------------------------------------------ |
-| ⚙️  | **Architecture**  | <ul><li>Client-Server Model with RESTful API</li><li>Frontend: HTML + JavaScript</li><li>Backend: Node.js</li></ul> |
-| 🔩  | **Code Quality**  | <ul><li>Modular JavaScript files</li><li>Consistent naming conventions</li><li>Minimal code duplication</li></ul>   |
-| 📄  | **Documentation** | <ul><li>Basic README with project overview</li><li>Inline comments in code</li><li>Limited API docs</li></ul>       |
-| 🔌  | **Integrations**  | <ul><li>Uses JavaScript for frontend interactions</li><li>HTML forms for user input</li></ul>                       |
-| 🧩  | **Modularity**    | <ul><li>Frontend and backend separated</li><li>Reusable JavaScript components</li></ul>                             |
-| 🧪  | **Testing**       | <ul><li>Minimal testing setup</li><li>Some unit tests in JavaScript</li></ul>                                       |
-| ⚡️ | **Performance**   | <ul><li>Client-side rendering for responsiveness</li><li>Lightweight HTML and JavaScript</li></ul>                  |
-| 🛡️  | **Security**      | <ul><li>Basic input validation</li><li>No evident authentication or authorization mechanisms</li></ul>              |
-| 📦  | **Dependencies**  | <ul><li>JavaScript libraries (e.g., possibly jQuery or vanilla JS)</li><li>HTML dependencies minimal</li></ul>      |
+|     | Component          | Details                                                                                                                                                                                          |
+| :-- | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ⚙️  | **Architecture**   | <ul><li>Static multi-page site (**HTML/CSS/JavaScript**)</li><li>Pages: **index.html**, **About**, **Songs**, **Sign-Up**</li><li>No server or database code present in the repository</li></ul> |
+| 🔩  | **Code Quality**   | <ul><li>Single JS entry (**Singer Website/JavaScript/app.js**)</li><li>Clear separation of **HTML / CSS / JS** assets</li><li>Human-readable file and folder naming</li></ul>                    |
+| 📄  | **Documentation**  | <ul><li>Project **README** with overview and structure</li><li>**CONTRIBUTING.md**, **CODE_OF_CONDUCT.md**, **SECURITY.md** included</li><li>MIT **LICENSE** file</li></ul>                      |
+| 🔌  | **Integrations**   | <ul><li>Embeds **YouTube** videos and images for media content</li><li>HTML forms for user sign-up (client-side only)</li></ul>                                                                  |
+| 🧩  | **Modularity**     | <ul><li>Per-page HTML with shared styles (**Singer Website/Public/style.css**)</li><li>Reusable DOM helpers in a single **app.js**</li></ul>                                                     |
+| 🧪  | **Testing**        | <ul><li>No automated tests in the repository</li><li>Manual route/UI validation</li></ul>                                                                                                        |
+| ⚡️ | **Performance**    | <ul><li>Lightweight static assets</li><li>Client-side DOM updates for responsiveness</li></ul>                                                                                                   |
+| 🛡️  | **Security**       | <ul><li>Client-side input checks</li><li>No authentication or authorization logic present</li><li>**SECURITY.md** outlines reporting policy</li></ul>                                            |
+| 📦  | **Dependencies**   | <ul><li>**Vanilla** HTML/CSS/JS (no package manager, no build step)</li><li>Image assets under **/Public/images**</li></ul>                                                                      |
+| ⚙️  | **CI / Templates** | <ul><li>GitHub Actions: **ci.yml**, contributor and index updaters</li><li>Issue & PR templates; **CODEOWNERS**</li></ul>                                                                        |
 
 ---
 
@@ -235,7 +238,6 @@ This project simplifies building interactive singer websites with core features 
       </details>
    </details>
 
-
 </details>
 
 ---
@@ -269,10 +271,6 @@ Build fullstack-singer-platform from the source and install dependencies:
    ```sh
    ❯ cd fullstack-singer-platform
    ```
-
-3. **Install the dependencies:**
-
-echo 'INSERT-INSTALL-COMMAND-HERE'
 
 <a id="usage"></a>
 

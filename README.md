@@ -122,83 +122,94 @@ This project simplifies building interactive singer websites with core features 
 ### 📑 Project Index
 
 <details open>
-	<summary><b><code>FULLSTACK-SINGER-PLATFORM/</code></b></summary>
-	<!-- __root__ Submodule -->
-	<details>
-		<summary><b>__root__</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ __root__</b></code>
-			<table style='width: 100%; border-collapse: collapse;'>
-			<thead>
-				<tr style='background-color: #f8f9fa;'>
-					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-					<th style='text-align: left; padding: 8px;'>Summary</th>
-				</tr>
-			</thead>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/MA1002643/fullstack-singer-platform/blob/master/index.html'>index.html</a></b></td>
-					<td style='padding: 8px;'>- Defines the main webpage structure for a singers website, featuring a responsive navigation bar and an image gallery<br>- Facilitates user interaction and navigation across sections like About, Songs, and Sign Up, while integrating visual content to enhance the sites aesthetic appeal within the overall architecture<br>- Serves as the primary entry point and visual interface for visitors.</td>
-				</tr>
-			</table>
-		</blockquote>
-	</details>
-	<!-- Singer Website Submodule -->
-	<details>
-		<summary><b>Singer Website</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ Singer Website</b></code>
-			<!-- JavaScript Submodule -->
-			<details>
-				<summary><b>JavaScript</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ Singer Website.JavaScript</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='https://github.com/MA1002643/fullstack-singer-platform/blob/master/Singer Website/JavaScript/app.js'>app.js</a></b></td>
-							<td style='padding: 8px;'>- Facilitates responsive navigation and user engagement on the Singer Website by managing mobile menu interactions, handling form submissions for mailing list sign-ups, and fetching/displaying hall of fame data<br>- Supports seamless user experience through dynamic UI updates and server communication, integrating core functionalities essential for interactive and data-driven features within the websites architecture.</td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
-			<!-- HTML Submodule -->
-			<details>
-				<summary><b>HTML</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ Singer Website.HTML</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='https://github.com/MA1002643/fullstack-singer-platform/blob/master/Singer Website/HTML/about.html'>about.html</a></b></td>
-							<td style='padding: 8px;'>- Defines the structure and content of the About page for the Singer Website, showcasing Imran Khans biography, achievements, and visual elements<br>- It integrates navigation, styling, and scripting to provide users with an engaging overview of the artist within the overall website architecture<br>- This page serves as an informational hub, enhancing user experience and site navigation.</td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='https://github.com/MA1002643/fullstack-singer-platform/blob/master/Singer Website/HTML/songs.html'>songs.html</a></b></td>
-							<td style='padding: 8px;'>- Displays a webpage featuring a navigation menu and a curated collection of embedded YouTube videos showcasing songs<br>- Facilitates user interaction through a responsive menu and provides seamless access to multimedia content, forming the core visual and interactive component of the singers website<br>- Integrates styling and scripting to enhance user experience and content presentation within the overall site architecture.</td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='https://github.com/MA1002643/fullstack-singer-platform/blob/master/Singer Website/HTML/sign-up.html'>sign-up.html</a></b></td>
-							<td style='padding: 8px;'>- Facilitates user registration through a sign-up form integrated into the websites navigation structure<br>- It captures user details such as full name and email address, enabling potential account creation or subscription functionalities<br>- Serves as a key component for user engagement within the overall website architecture, supporting data collection and interaction flow.</td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
+   <summary><b>FULLSTACK-SINGER-PLATFORM/</b></summary>
+   <details>
+      <summary><b>__root__</b></summary>
+      <ul>
+         <li><b><a href="./CODE_OF_CONDUCT.md">CODE_OF_CONDUCT.md</a></b> — File.</li>
+         <li><b><a href="./CONTRIBUTING.md">CONTRIBUTING.md</a></b> — File.</li>
+         <li><b><a href="./index.html">index.html</a></b> — HTML page.</li>
+         <li><b><a href="./LICENSE">LICENSE</a></b> — File.</li>
+         <li><b><a href="./README.md">README.md</a></b> — Project documentation, overview and setup instructions.</li>
+         <li><b><a href="./SECURITY.md">SECURITY.md</a></b> — File.</li>
+      </ul>
+   </details>
+   <details>
+      <summary><b>.github</b></summary>
+      <ul>
+         <li><b><a href=".github/CODEOWNERS">CODEOWNERS</a></b> — File.</li>
+      </ul>
+      <details>
+         <summary><b>ISSUE_TEMPLATE</b></summary>
+      <ul>
+         <li><b><a href=".github/ISSUE_TEMPLATE/bug_report.yml">bug_report.yml</a></b> — File.</li>
+         <li><b><a href=".github/ISSUE_TEMPLATE/config.yml">config.yml</a></b> — File.</li>
+         <li><b><a href=".github/ISSUE_TEMPLATE/feature_request.yml">feature_request.yml</a></b> — File.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>PULL_REQUEST_TEMPLATE</b></summary>
+      <ul>
+         <li><b><a href=".github/PULL_REQUEST_TEMPLATE/pull_request_template.yml">pull_request_template.yml</a></b> — File.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>scripts</b></summary>
+      <ul>
+         <li><b><a href=".github/scripts/update-contributors.js">update-contributors.js</a></b> — JavaScript file.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>workflows</b></summary>
+      <ul>
+         <li><b><a href=".github/workflows/ci.yml">ci.yml</a></b> — File.</li>
+         <li><b><a href=".github/workflows/update-contributors.yml">update-contributors.yml</a></b> — File.</li>
+         <li><b><a href=".github/workflows/update-project-index.yml">update-project-index.yml</a></b> — File.</li>
+         <li><b><a href=".github/workflows/update-project-structure.yml">update-project-structure.yml</a></b> — File.</li>
+         <li><b><a href=".github/workflows/update-tech-badges-single-repo.yml">update-tech-badges-single-repo.yml</a></b> — File.</li>
+      </ul>
+      </details>
+   </details>
+
+   <details>
+      <summary><b>Singer Website</b></summary>
+      <details>
+         <summary><b>HTML</b></summary>
+      <ul>
+         <li><b><a href="Singer Website/HTML/about.html">about.html</a></b> — HTML page.</li>
+         <li><b><a href="Singer Website/HTML/sign-up.html">sign-up.html</a></b> — HTML page.</li>
+         <li><b><a href="Singer Website/HTML/songs.html">songs.html</a></b> — HTML page.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>JavaScript</b></summary>
+      <ul>
+         <li><b><a href="Singer Website/JavaScript/app.js">app.js</a></b> — JavaScript file.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>Public</b></summary>
+      <ul>
+         <li><b><a href="Singer Website/Public/style.css">style.css</a></b> — Stylesheet.</li>
+      </ul>
+      <details>
+         <summary><b>images</b></summary>
+      <ul>
+         <li><b><a href="Singer Website/Public/images/Background_image.jpg">Background_image.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image1.jpg">image1.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image2.jpg">image2.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image3.jpg">image3.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image4.jpg">image4.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image5.jpg">image5.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image6.jpg">image6.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/image7.jpg">image7.jpg</a></b> — File.</li>
+         <li><b><a href="Singer Website/Public/images/test_image.jpeg">test_image.jpeg</a></b> — File.</li>
+      </ul>
+      </details>
+      </details>
+   </details>
+
+
 </details>
 
 ---

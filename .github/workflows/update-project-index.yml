@@ -1,0 +1,314 @@
+name: Update Index
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-index-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    env:
+      README_PATH: README.md
+      INDEX_HEADING: "### 📑 Project Index"
+      AI_MODEL: gpt-4o-mini
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Rebuild Project Index (AI descriptions) and update README
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const README_PATH = process.env.README_PATH || 'README.md';
+          const INDEX_HEADING = process.env.INDEX_HEADING || '### 📑 Project Index';
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
+          const AI_MODEL = process.env.AI_MODEL || 'gpt-4o-mini';
+
+          if (!fs.existsSync(README_PATH)) {
+            console.error(`❌ README not found at ${README_PATH}`);
+            process.exit(1);
+          }
+
+          // ---------- SETTINGS ----------
+          const IGNORE = new Set([
+            '.git','node_modules','.DS_Store','.idea','.vscode','.env','.venv',
+            '.next','dist','build','coverage','.turbo','.cache'
+          ]);
+          const MAX_SAMPLE_BYTES = 8192; // read first 8KB per file for AI context
+          const AI_TIMEOUT_MS = 25000;
+
+          function listDir(abs) {
+            return fs.readdirSync(abs, { withFileTypes: true })
+              .filter(e => !IGNORE.has(e.name))
+              .sort((a, b) => {
+                if (a.isDirectory() !== b.isDirectory()) return a.isDirectory() ? -1 : 1;
+                return a.name.localeCompare(b.name);
+              });
+          }
+
+          function readSample(fileAbs) {
+            try {
+              const b = fs.readFileSync(fileAbs);
+              return b.toString('utf8', 0, Math.min(b.length, MAX_SAMPLE_BYTES));
+            } catch { return ''; }
+          }
+
+          // ---- Heuristic fallback (used only if AI is unavailable/fails) ----
+          function fallbackDescribe(rel, textSample = '') {
+            const n = rel.toLowerCase();
+            if (n.endsWith('/readme.md') || n === 'readme.md') return 'Project documentation, overview and setup instructions.';
+            if (n.endsWith('package.json')) return 'Npm manifest (dependencies & scripts).';
+            if (n.endsWith('package-lock.json') || n.endsWith('pnpm-lock.yaml') || n.endsWith('yarn.lock')) return 'Lockfile with exact dependency versions.';
+            if (n.endsWith('.pem')) return 'Certificate/PEM material (local TLS/testing).';
+            if (n.endsWith('websocketserver.js')) return 'WebSocket server that manages connections, broadcasts and hooks.';
+            if (n.endsWith('htmlserver.js')) return 'Serves static frontend assets for the chat UI.';
+            if (n.endsWith('/index.js') || n === 'index.js') return 'Main server entrypoint that wires HTTP and WebSocket servers.';
+            if (n.includes('/migrations/') && n.endsWith('.sql')) {
+              if (/addroomname/i.test(n)) return 'Adds room name column/table changes.';
+              if (/addquestions/i.test(n)) return 'Adds question support schema.';
+              return 'Database migration script.';
+            }
+            if (n.includes('/test/')) {
+              if (n.endsWith('.sql')) return 'SQL for testing DB schemas and sample data.';
+              if (n.endsWith('.js')) return 'Test helpers and scripts.';
+              return 'Test artifact.';
+            }
+            if (n.includes('/html/')) {
+              if (n.endsWith('.html')) {
+                if (/chatroom\.html$/i.test(n)) return 'Main chatroom UI page.';
+                if (/index\.html$/i.test(n)) return 'Login/landing page for users.';
+                return 'HTML page.';
+              }
+              if (n.endsWith('.css')) return 'Stylesheet for the HTML UI.';
+              if (/clientside\.js$/i.test(n)) return 'Client-side JS handling WebSocket events and UI updates.';
+              if (/messageevents\.js$/i.test(n)) return 'Structured WebSocket message/event types.';
+            }
+            if (n.includes('example chatroom html & styling')) {
+              if (n.endsWith('.html')) return 'Example chatroom page demonstrating layout and client-side integration.';
+              if (n.endsWith('.css')) return 'Example stylesheet for the sample chatroom.';
+            }
+            if (n.endsWith('.js')) {
+              if (/socket|websocket|ws/i.test(textSample)) return 'WebSocket-related JavaScript.';
+              if (/express|http\.createServer/i.test(textSample)) return 'Server-side JavaScript.';
+              return 'JavaScript file.';
+            }
+            if (n.endsWith('.html')) return 'HTML page.';
+            if (n.endsWith('.css')) return 'Stylesheet.';
+            if (n.endsWith('.sql')) return 'SQL script.';
+            return 'File.';
+          }
+
+          // ---- AI description generator ----
+          async function aiDescribeFile(relPath, sample) {
+            if (!OPENAI_API_KEY) return fallbackDescribe(relPath, sample);
+
+            const controller = new AbortController();
+            const t = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
+
+            const prompt = [
+              { role: "system", content:
+                "You are a concise code indexer. For a given repository file path and a short content sample, output a single, crisp one-line description (max 20 words). No file type prefixes, no markdown, no quotes. Start directly with the description. Avoid repeating the filename. Keep it specific and helpful." },
+              { role: "user", content:
+                `Path: ${relPath}\n---\nSample (truncated):\n${sample || '(empty or binary)'}\n---\nOne-line description:` }
+            ];
+
+            try {
+              const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  model: AI_MODEL,
+                  messages: prompt,
+                  temperature: 0.2,
+                  max_tokens: 40
+                }),
+                signal: controller.signal
+              });
+
+              clearTimeout(t);
+
+              if (!res.ok) {
+                const errTxt = await res.text().catch(()=>String(res.status));
+                console.warn(`⚠️ AI describe failed (${res.status}): ${errTxt}`);
+                return fallbackDescribe(relPath, sample);
+              }
+              const data = await res.json();
+              const text = data?.choices?.[0]?.message?.content?.trim() || '';
+              if (!text) return fallbackDescribe(relPath, sample);
+
+              // Normalize: ensure sentence end, keep it as one line
+              let line = text.replace(/\s+/g, ' ').trim();
+              if (line.length > 200) line = line.slice(0, 200).trim();
+              if (!/[.!?]$/.test(line)) line += '.';
+              return line;
+            } catch (e) {
+              console.warn(`⚠️ AI describe error: ${e?.message || e}`);
+              return fallbackDescribe(relPath, sample);
+            }
+          }
+
+          // ---- HTML builders (async to await AI) ----
+          async function buildDetailsForDir(rootAbs, relDir) {
+            const abs = path.join(rootAbs, relDir);
+            const entries = listDir(abs);
+            const files = entries.filter(e => e.isFile());
+            const dirs  = entries.filter(e => e.isDirectory());
+
+            let html = '';
+            if (files.length) {
+              html += '      <ul>\n';
+              // Sequential to be kind to rate limits; you can parallelize if needed.
+              for (const f of files) {
+                const relPath = path.posix.join(relDir, f.name).replace(/\\/g, '/');
+                const sample = readSample(path.join(abs, f.name));
+                const desc = await aiDescribeFile(relPath, sample);
+                html += `         <li><b><a href="${relPath}">${f.name}</a></b> — ${desc}</li>\n`;
+              }
+              html += '      </ul>\n';
+            }
+
+            for (const d of dirs) {
+              const childRel = path.posix.join(relDir, d.name).replace(/\\/g, '/');
+              html += '      <details>\n';
+              html += `         <summary><b>${d.name}</b></summary>\n`;
+              html += await buildDetailsForDir(rootAbs, childRel);
+              html += '      </details>\n';
+            }
+
+            return html;
+          }
+
+          async function buildProjectIndex() {
+            const repoName = (process.env.GITHUB_REPOSITORY || '').split('/').pop()
+              || path.basename(process.cwd());
+            const repoNameUpper = repoName.toUpperCase();
+
+            let out = '';
+            out += `${INDEX_HEADING}\n\n`;
+            out += '<details open>\n';
+            out += `   <summary><b>${repoNameUpper}/</b></summary>\n`;
+
+            const rootEntries = listDir(process.cwd());
+            const rootFiles = rootEntries.filter(e => e.isFile());
+            if (rootFiles.length) {
+              out += '   <details>\n';
+              out += '      <summary><b>__root__</b></summary>\n';
+              out += '      <ul>\n';
+              for (const f of rootFiles) {
+                const sample = readSample(path.join(process.cwd(), f.name));
+                const desc = await aiDescribeFile(f.name, sample);
+                out += `         <li><b><a href="./${f.name}">${f.name}</a></b> — ${desc}</li>\n`;
+              }
+              out += '      </ul>\n';
+              out += '   </details>\n';
+            }
+
+            for (const d of rootEntries.filter(e => e.isDirectory())) {
+              const rel = d.name;
+              out += '   <details>\n';
+              out += `      <summary><b>${d.name}</b></summary>\n`;
+              out += await buildDetailsForDir(process.cwd(), rel);
+              out += '   </details>\n\n';
+            }
+
+            out += '\n</details>';
+            return out;
+          }
+
+          // Replace from heading to next horizontal rule '---'
+          function replaceRangeByHR(readme, newSection) {
+            const startIdx = readme.indexOf(INDEX_HEADING);
+            if (startIdx === -1) {
+              console.error(`❌ Heading "${INDEX_HEADING}" not found in README.`);
+              process.exit(1);
+            }
+            const afterStart = startIdx + INDEX_HEADING.length;
+            const after = readme.slice(afterStart);
+            const HR_RX = /(?:^|\n)\s*---\s*(?:\n|$)/m;
+            const hrMatch = after.match(HR_RX);
+            const endIdx = hrMatch ? (afterStart + hrMatch.index) : readme.length;
+            const before = readme.slice(0, startIdx);
+            const tail = readme.slice(endIdx);
+            return before + newSection + tail;
+          }
+
+          (async () => {
+            const readme = fs.readFileSync(README_PATH, 'utf8');
+            const newSection = await buildProjectIndex();
+            const updated = replaceRangeByHR(readme, newSection);
+
+            if (updated === readme) {
+              console.log('No changes to Project Index.');
+              process.exit(0);
+            }
+
+            fs.writeFileSync(README_PATH, updated, 'utf8');
+            console.log('✅ Project Index updated in README (AI descriptions).');
+          })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
+          NODE
+
+      - name: Commit, rebase on remote, and push
+        env:
+          # Prefer a Personal Access Token if provided; fall back to GITHUB_TOKEN
+          PAT_OR_TOKEN: ${{ secrets.PERSONAL_TOKEN != '' && secrets.PERSONAL_TOKEN || secrets.GITHUB_TOKEN }}
+          README_PATH: README.md
+        run: |
+          set -euo pipefail
+
+          BRANCH="${GITHUB_REF_NAME:-$(git rev-parse --abbrev-ref HEAD)}"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Use token for both fetch/pull and push
+          git remote set-url origin "https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          # Exit early if README didn't change
+          if git diff --quiet -- "${README_PATH}"; then
+            echo "No changes."
+            exit 0
+          fi
+
+          # Commit local changes
+          git add "${README_PATH}"
+          git commit -m "docs: auto-update 📑 Project Index with AI one-liners" || true
+
+          # Rebase on latest remote to avoid non-fast-forward pushes
+          git fetch origin "${BRANCH}"
+          git pull --rebase --autostash origin "${BRANCH}" || true
+
+          # If rebase touched README, ensure it's staged/committed
+          git add "${README_PATH}" || true
+          git commit --no-edit || true
+
+          # Try push; if rejected due to race, sync and retry once
+          if ! git push origin "HEAD:${BRANCH}"; then
+            echo "Push rejected, syncing once and retrying…"
+            git fetch origin "${BRANCH}"
+            git pull --rebase --autostash origin "${BRANCH}" || true
+            git add "${README_PATH}" || true
+            git commit --no-edit || true
+            git push origin "HEAD:${BRANCH}"
+          fi

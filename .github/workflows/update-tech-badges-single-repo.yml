@@ -1,0 +1,287 @@
+name: Update tech badges
+
+on:
+  push:
+    branches: ["**"]
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    env:
+      README_PATH: README.md
+      SECTION_START: "<!-- TECH-STACK:START -->"
+      SECTION_END: "<!-- TECH-STACK:END -->"
+      BADGE_STYLE: "flat"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Simple Icons (brand colors)
+        run: npm i simple-icons@^13
+
+      - name: Build tech stack section and update README
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const README_PATH   = process.env.README_PATH || 'README.md';
+          const START_MARKER  = process.env.SECTION_START || '<!-- TECH-STACK:START -->';
+          const END_MARKER    = process.env.SECTION_END   || '<!-- TECH-STACK:END -->';
+          const BADGE_STYLE   = (process.env.BADGE_STYLE || 'flat').trim();
+
+          if (!fs.existsSync(README_PATH)) {
+            console.error(`❌ Missing ${README_PATH}`);
+            process.exit(1);
+          }
+
+          // ----------------- Helpers -----------------
+          const IGNORE_DIRS = new Set(['.git','node_modules','dist','build','coverage','.next','.turbo','.cache','.venv','vendor','target','bin','obj']);
+          const EXT_LANG = new Map(Object.entries({
+            "js":"JavaScript","jsx":"JavaScript","mjs":"JavaScript",
+            "ts":"TypeScript","tsx":"TypeScript",
+            "html":"HTML5","htm":"HTML5",
+            "css":"CSS3",
+            "sql":"SQL"
+          }));
+
+          // Packages we don't want badges for (utility/dev/internal)
+          const EXCLUDE = new Set([
+            'simple-icons','uuid','nanoid','ws','dotenv','cross-env','rimraf','concurrently',
+            'nodemon','nyc','mocha','chai','eslint','prettier','husky','lint-staged'
+          ]);
+
+          // Map package names to nicer display/brands
+          const MAP_DIRECT = {
+            'express':'Express',
+            'vue':'Vue.js',
+            'bootstrap':'Bootstrap',
+            'vite':'Vite',
+            'socket.io':'Socket.IO',
+            'axios':'Axios',
+            'cors':'CORS',
+            'sqlite3':'SQLite',
+            'sqlite':'SQLite',
+            'mysql2':'MySQL',
+            'pg':'PostgreSQL',
+            'mongoose':'Mongoose',
+            'mongodb':'MongoDB',
+            'redis':'Redis',
+            'typescript':'TypeScript',
+          };
+
+          function normalizeLabel(s){ return String(s||'').toLowerCase().trim(); }
+
+          async function walk(dir) {
+            const out = [];
+            const stack = [dir];
+            while (stack.length) {
+              const cur = stack.pop();
+              const entries = fs.readdirSync(cur, { withFileTypes: true });
+              for (const e of entries) {
+                const p = path.join(cur, e.name);
+                if (e.isDirectory()) {
+                  if (!IGNORE_DIRS.has(e.name)) stack.push(p);
+                } else if (e.isFile()) out.push(p);
+              }
+            }
+            return out;
+          }
+
+          function readTextSafe(p){ try { return fs.readFileSync(p,'utf8'); } catch { return ''; } }
+          function parseJSON(t){ try { return JSON.parse(t); } catch { return null; } }
+
+          // Build a Shields badge with brand color + logo if we can find it.
+          async function makeBadgeFactory() {
+            const si = await import('simple-icons'); // ESM
+
+            // Try multiple strategies to find a Simple Icons entry
+            function siLookup(label) {
+              const attempts = [
+                label,                                      // e.g., "Express"
+                label.replace(/\./g,'dot'),
+                label.replace(/\+/g,'plus'),
+                label.replace(/#/g,'sharp'),
+                label.replace(/\s+/g,' '),                  // normalize spaces
+                label.replace(/\s+/g,'-').toLowerCase(),    // slug-style guess
+                label.toLowerCase(),
+              ];
+
+              // Prefer si.get if available (v13)
+              const getFn = si.get || si.Get || null;
+
+              for (const attempt of attempts) {
+                let icon = null;
+                if (getFn) {
+                  icon = getFn(attempt) || getFn(String(attempt).replace(/\s+/g,''));
+                }
+                // Fallback: scan exported icons by title (slower, but robust)
+                if (!icon) {
+                  for (const k of Object.keys(si)) {
+                    const v = si[k];
+                    if (v && typeof v === 'object' && 'title' in v && 'slug' in v) {
+                      if (normalizeLabel(v.title) === normalizeLabel(attempt)) { icon = v; break; }
+                      if (normalizeLabel(v.slug)  === normalizeLabel(attempt)) { icon = v; break; }
+                    }
+                  }
+                }
+                if (icon) return icon;
+              }
+              return null;
+            }
+
+            return (label) => {
+              const icon = siLookup(label);
+              // If we found a brand, use its color & slug; otherwise, try a best-effort slug
+              const hex  = (icon?.hex || '444444').replace(/^#/, '');
+              const slug = icon?.slug || label.replace(/\s+/g,'-').toLowerCase(); // guess slug for Shields
+              const encLabel = encodeURIComponent(label);
+              let url = `https://img.shields.io/badge/${encLabel}-${hex}.svg?style=${BADGE_STYLE}`;
+              if (slug) url += `&logo=${encodeURIComponent(slug)}&logoColor=white`;
+              return `<img src="${url}" alt="${label}">`;
+            };
+          }
+
+          function labelFromImgTag(tag){
+            const m = tag.match?.(/alt="([^"]+)"/i);
+            return m ? m[1].trim() : null;
+          }
+
+          function mergeUnique(existingTags, newTags){
+            const seen = new Set(existingTags.map(labelFromImgTag).filter(Boolean).map(normalizeLabel));
+            const add = [];
+            for (const t of newTags){
+              const l = labelFromImgTag(t);
+              if (!l) continue;
+              const n = normalizeLabel(l);
+              if (!seen.has(n)) { seen.add(n); add.push(t); }
+            }
+            return existingTags.concat(add);
+          }
+
+          (async () => {
+            const makeBadge = await makeBadgeFactory();
+
+            const detectedBadges = [];
+
+            // Collect package.json deps/scripts
+            const files = await walk(process.cwd());
+            const pkgPaths = files.filter(f => /(^|\/)package\.json$/i.test(f));
+
+            for (const p of pkgPaths){
+              const j = parseJSON(readTextSafe(p)) || {};
+              const depBuckets = [j.dependencies,j.devDependencies,j.peerDependencies,j.optionalDependencies].filter(Boolean);
+
+              for (const deps of depBuckets){
+                for (const name of Object.keys(deps)){
+                  const raw = String(name);
+                  const n = normalizeLabel(raw);
+                  if (EXCLUDE.has(n)) continue;                      // skip noise
+                  const label = MAP_DIRECT[n] || raw;                 // map to brand if known
+                  detectedBadges.push(makeBadge(label));
+                }
+              }
+
+              for (const s of Object.values(j.scripts || {})){
+                const line = String(s).toLowerCase();
+                if (/vite/.test(line))      detectedBadges.push(makeBadge('Vite'));
+                if (/eslint/.test(line))    detectedBadges.push(makeBadge('ESLint'));
+                if (/prettier/.test(line))  detectedBadges.push(makeBadge('Prettier'));
+              }
+            }
+
+            // File extension language signals
+            const langTotals = new Map();
+            for (const f of files) {
+              const ext = path.extname(f).slice(1).toLowerCase();
+              const lang = EXT_LANG.get(ext);
+              if (lang) langTotals.set(lang, (langTotals.get(lang)||0) + (fs.statSync(f).size || 0));
+            }
+            for (const lang of [...langTotals.keys()]) {
+              detectedBadges.push(makeBadge(lang));
+            }
+
+            // De-dupe
+            const render = mergeUnique([], detectedBadges);
+
+            // Centered icons-only block
+            const section = [
+              '',
+              '<div align="center" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:0 auto;">',
+              ...render,
+              '</div>',
+              '',
+            ].join('\n');
+
+            // Replace between markers
+            let readme = fs.readFileSync(README_PATH,'utf8');
+            const si = readme.indexOf(START_MARKER);
+            const ei = readme.indexOf(END_MARKER);
+            if (si === -1 || ei === -1 || ei < si) {
+              console.error(`❌ Markers not found. Put:\n${START_MARKER}\n${END_MARKER}\ninto your README.md`);
+              process.exit(1);
+            }
+            const before = readme.slice(0, si + START_MARKER.length);
+            const after  = readme.slice(ei);
+            const next = `${before}\n${section}\n${after}`;
+
+            if (next === readme) {
+              console.log('No changes.');
+              process.exit(0);
+            }
+            fs.writeFileSync(README_PATH, next, 'utf8');
+            console.log('✅ README tech stack badges updated (auto-detected only, centered, with logos/colors when available).');
+          })().catch(e => { console.error('❌ Failed:', e); process.exit(1); });
+          NODE
+
+      - name: Commit, pull --rebase, and push
+        env:
+          PAT_OR_TOKEN: ${{ secrets.PERSONAL_TOKEN || secrets.GITHUB_TOKEN }}
+          README_PATH: README.md
+        run: |
+          set -e
+          if git diff --quiet -- "${README_PATH}"; then
+            echo "No changes."
+            exit 0
+          fi
+          git config --global --add safe.directory "$(pwd)"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${README_PATH}"
+          git commit -m "chore: refresh Tech Stack badges (auto-detected only, centered)"
+          BRANCH="${GITHUB_REF_NAME:-}"
+          if [ -z "$BRANCH" ]; then
+            BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
+          fi
+          if [ -z "$BRANCH" ]; then
+            if git ls-remote --exit-code --heads origin main >/dev/null 2>&1; then
+              BRANCH="main"
+            elif git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then
+              BRANCH="master"
+            else
+              BRANCH="$(git branch --show-current)"
+            fi
+          fi
+          echo "Target branch: $BRANCH"
+          git checkout -B "$BRANCH"
+          git fetch origin
+          git pull --rebase origin "$BRANCH" || git pull --rebase origin main || git pull --rebase origin master || true
+          PUSH_URL="https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          ( git push "$PUSH_URL" HEAD:"$BRANCH" ) || (
+            echo "First push failed, rebasing again and retrying..."
+            git fetch origin
+            git pull --rebase origin "$BRANCH" || true
+            git push "$PUSH_URL" HEAD:"$BRANCH" || git push --force-with-lease "$PUSH_URL" HEAD:"$BRANCH"
+          )

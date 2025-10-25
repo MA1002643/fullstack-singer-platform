@@ -1,0 +1,77 @@
+name: Update Contributor
+
+on:
+    push:
+        branches: ["**"]
+    workflow_dispatch: {}
+
+permissions:
+    contents: write
+
+concurrency:
+    group: update-contributors-${{ github.ref }}
+    cancel-in-progress: false
+
+jobs:
+    update-contributors:
+        runs-on: ubuntu-latest
+        # Avoid infinite loop when the bot's own commit pushes.
+        if: github.actor != 'github-actions[bot]'
+        env:
+            README_PATH: README.md
+            DETAILS_SUMMARY_TEXT: "<summary>Contributor Graph</summary>"
+            START_MARKER: "<!-- CONTRIBUTORS:START -->"
+            END_MARKER: "<!-- CONTRIBUTORS:END -->"
+            AVATAR_SIZE: "48"
+            MAX_CONTRIBUTORS: "200"
+
+        steps:
+            - name: Check out the exact ref with full history
+              uses: actions/checkout@v4
+              with:
+                  # Use the ref that triggered this workflow (branch or tag)
+                  ref: ${{ github.ref }}
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            - name: Refresh contributor avatars in README
+              run: node .github/scripts/update-contributors.js
+              env:
+                  GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN || github.token }}
+                  GITHUB_REPOSITORY: ${{ github.repository }}
+
+            - name: Commit & push if changed (rebase-safe)
+              env:
+                  PAT_OR_TOKEN: ${{ secrets.PERSONAL_TOKEN || github.token }}
+                  README_PATH: README.md
+                  BRANCH_NAME: ${{ github.ref_name }}
+                  REPO: ${{ github.repository }}
+              shell: bash
+              run: |
+                  set -euo pipefail
+
+                  if git diff --quiet -- "${README_PATH}"; then
+                    echo "No changes."
+                    exit 0
+                  fi
+
+                  git config user.name  "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+                  # Authenticate origin for both fetch/pull and push
+                  git remote set-url origin "https://x-access-token:${PAT_OR_TOKEN}@github.com/${REPO}.git"
+
+                  git add "${README_PATH}"
+                  git commit -m "docs: refresh Contributor Graph avatars [skip ci]"
+
+                  # Rebase on top of the latest remote to avoid non-fast-forward
+                  git fetch origin "${BRANCH_NAME}"
+                  git rebase "origin/${BRANCH_NAME}"
+
+                  # Push back to the same branch that triggered the workflow
+                  git push origin "HEAD:${BRANCH_NAME}"

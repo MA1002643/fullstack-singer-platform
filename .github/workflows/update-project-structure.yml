@@ -1,0 +1,149 @@
+name: Update Project Structure
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-structure:
+    runs-on: ubuntu-latest
+    env:
+      README_PATH: README.md
+      HEADING_RX: "^##\\s*📁\\s*Project Structure\\s*$"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Rebuild folder tree and update README
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const README_PATH = process.env.README_PATH || 'README.md';
+          const HEADING_RX = new RegExp(process.env.HEADING_RX || '^##\\s*📁\\s*Project Structure\\s*$', 'm');
+          const repoName = (process.env.GITHUB_REPOSITORY || '').split('/').pop() || path.basename(process.cwd());
+
+          if (!fs.existsSync(README_PATH)) {
+            console.error(`❌ README not found at ${README_PATH}`);
+            process.exit(1);
+          }
+
+          // ---------------- Tree builder (directories first, sorted; box-drawing lines) ----------------
+          const IGNORE = new Set([
+            '.git','node_modules','.DS_Store','.idea','.vscode','.env','.venv','.python-version',
+            '.next','dist','build','coverage','.turbo','.cache',
+            'public','logs','uploads','tests','.husky','.github','scripts'
+          ]);
+
+          function listDir(dir) {
+            const entries = fs.readdirSync(dir, { withFileTypes: true })
+              .filter(e => !IGNORE.has(e.name))
+              .map(e => ({ name: e.name, isDir: e.isDirectory() }))
+              .sort((a, b) => {
+                if (a.isDir !== b.isDir) return a.isDir ? -1 : 1; // dirs first
+                return a.name.localeCompare(b.name);
+              });
+            return entries;
+          }
+
+          // ----- Improved Tree Drawer (adds │ vertical connectors) -----
+          function renderTree(rootAbs, displayRootName) {
+            const lines = [`└── ${displayRootName}/`];
+
+            function walk(abs, prefix = '') {
+              const entries = listDir(abs);
+              entries.forEach((ent, idx) => {
+                const isLast = idx === entries.length - 1;
+                const connector = isLast ? '└── ' : '├── ';
+                const line = `${prefix}${connector}${ent.name}${ent.isDir ? '/' : ''}`;
+                lines.push(line);
+                if (ent.isDir) {
+                  const childAbs = path.join(abs, ent.name);
+                  const nextPrefix = prefix + (isLast ? '    ' : '│   ');
+                  walk(childAbs, nextPrefix);
+                }
+              });
+            }
+
+            walk(rootAbs, '');
+            return lines.join('\n');
+          }
+
+          const treeText = renderTree(process.cwd(), repoName);
+
+          // Wrap with the exact code fence style used in the README sample
+          const fencedTree = "```sh\n" + treeText + "\n```";
+
+          // ---------------- Replace the block after the target heading ----------------
+          const readme = fs.readFileSync(README_PATH, 'utf8');
+
+          // Find heading
+          const headingMatch = readme.match(HEADING_RX);
+          if (!headingMatch) {
+            console.error('❌ Could not find "## 📁 Project Structure" heading in README.');
+            process.exit(1);
+          }
+
+          // Find the first ``` block after the heading and its closing ```
+          const headingIndex = headingMatch.index;
+          const afterHeading = readme.slice(headingIndex);
+
+          // Locate the opening code fence after the heading
+          const openFenceIdxRel = afterHeading.indexOf('```');
+          if (openFenceIdxRel === -1) {
+            console.error('❌ No code fence found after the Project Structure heading.');
+            process.exit(1);
+          }
+          const openFenceAbs = headingIndex + openFenceIdxRel;
+
+          // Locate the closing code fence after the opening
+          const afterOpen = readme.slice(openFenceAbs + 3);
+          const closeFenceIdxRel = afterOpen.indexOf('```');
+          if (closeFenceIdxRel === -1) {
+            console.error('❌ Closing code fence not found for the Project Structure section.');
+            process.exit(1);
+          }
+          const closeFenceAbs = openFenceAbs + 3 + closeFenceIdxRel + 3; // include closing ```
+
+          // New README with replaced fenced block
+          const before = readme.slice(0, openFenceAbs);
+          const after = readme.slice(closeFenceAbs);
+          const updated = before + fencedTree + after;
+
+          if (updated === readme) {
+            console.log('No changes to Project Structure.');
+            process.exit(0);
+          }
+
+          fs.writeFileSync(README_PATH, updated, 'utf8');
+          console.log('✅ Project Structure updated in README.');
+          NODE
+
+      - name: Commit & push if changed
+        env:
+          PAT_OR_TOKEN: ${{ secrets.PERSONAL_TOKEN || secrets.GITHUB_TOKEN }}
+          README_PATH: README.md
+        run: |
+          if git diff --quiet -- "${README_PATH}"; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${README_PATH}"
+          git commit -m "docs: auto-update Project Structure tree"
+          git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_REF_NAME:-main} || \
+          git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main || \
+          git push https://x-access-token:${PAT_OR_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:master

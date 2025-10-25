@@ -1,0 +1,118 @@
+name: "🚀 Pull Request"
+description: "Submit a new Pull Request to improve the project"
+title: "[PR] <brief title>"
+labels:
+  - pull request
+assignees:
+  - MA1002643
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📌 Summary
+        A clear and concise description of what this PR does.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: "Briefly describe what this PR introduces or fixes."
+      placeholder: "Implements real-time chat message translation support."
+    validations:
+      required: true
+
+  - type: input
+    id: related-issues
+    attributes:
+      label: Related Issue(s)
+      description: "List related issues, e.g., Closes #123, Fixes #456"
+      placeholder: "Closes #12"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: change-type
+    attributes:
+      label: Type of Change
+      description: "Select the type(s) of change introduced by this PR."
+      options:
+        - label: "🐞 Bug fix"
+        - label: "✨ New feature"
+        - label: "🧹 Refactor (no functional change)"
+        - label: "📚 Docs update"
+        - label: "🧰 Chore/Tooling"
+        - label: "⚡ Performance improvement"
+        - label: "🧩 Other (please specify below)"
+        - label: "I confirm I selected the correct change type(s) and filled 'Other' if chosen"
+          required: true
+
+  - type: textarea
+    id: change-type-other
+    attributes:
+      label: "Describe Other Change Type"
+      description: "If you selected '🧩 Other', describe the change here. Otherwise type 'N/A'."
+      placeholder: "e.g., Dependency update, CI workflow tweak, security hardening, etc."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: "Ensure your PR meets the project’s contribution standards."
+      options:
+        - label: "My code follows the project’s style guidelines"
+        - label: "I’ve added or updated tests (if applicable)"
+        - label: "I’ve updated documentation (README/Docs/Comments)"
+        - label: "I’ve run the app locally and verified the change"
+        - label: "I’ve added screenshots or video for UI changes"
+        - label: "I confirm the checklist above is complete"
+          required: true
+
+  - type: textarea
+    id: test-steps
+    attributes:
+      label: "🧪 How to Test"
+      description: "Provide step-by-step instructions for reviewers to reproduce your changes."
+      placeholder: |
+        1. Pull this branch
+        2. Run `npm install`
+        3. Start the app and verify message translation works
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "🖼️ Screenshots / Videos (UI)"
+      description: "Attach screenshots or video links showcasing your UI changes."
+      placeholder: "Drag & drop images or paste URLs here."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: breaking-changes
+    attributes:
+      label: "⚠️ Breaking Changes"
+      options:
+        - label: "Yes (describe below)"
+        - label: "No"
+        - label: "I confirm I have accurately indicated whether this PR is breaking"
+          required: true
+
+  - type: textarea
+    id: migration
+    attributes:
+      label: "Migration Path (if breaking changes)"
+      placeholder: "Describe any required updates for compatibility."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reviewer-notes
+    attributes:
+      label: "📓 Notes for Reviewers"
+      description: "Add any extra context or information for reviewers."
+      placeholder: "e.g., Known limitations, pending TODOs, design decisions."
+    validations:
+      required: true

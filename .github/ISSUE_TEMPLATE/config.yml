@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/MA1002643/vevox-real-time-chat-web-application#readme
+    about: Please check the documentation before opening an issue.
+  - name: 💬 Discussions
+    url: https://github.com/MA1002643/vevox-real-time-chat-web-application/discussions
+    about: Use discussions for ideas, questions, or general feedback.

@@ -1,0 +1,53 @@
+name: "💡 Feature Request"
+description: "Suggest a new idea or improvement for this project"
+title: "[FEATURE] <your feature title>"
+labels:
+  - enhancement
+  - idea
+assignees:
+  - MA1002643
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a feature! Please fill out the form below so we can understand your idea better.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: Short description of your idea.
+      placeholder: "Add real-time message translation support"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Why do you think this feature is needed?
+      placeholder: "This would improve accessibility for users from different regions..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: "Describe how you'd like this feature to work."
+      placeholder: "Integrate with Google Translate API to translate messages in real-time."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: "Describe any alternative solutions or features you’ve considered."
+      placeholder: "Manual language switching, message filters, etc."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: "Add any other context, mockups, or screenshots."

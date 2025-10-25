@@ -53,7 +53,7 @@
 - [Project Structure](#project-structure)
   - [Project Index](#project-index)
 - [Roadmap](#roadmap)
-- [Contributing](#-contributing)
+- [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgment](#acknowledgment)
 
@@ -307,11 +307,7 @@ echo 'INSERT-TEST-COMMAND-HERE'
 
 ---
 
-## 🤝 Contributing
-
----
-
-<a id="acknowledgments"></a>
+<a id="acknowledgment"></a>
 
 ## ✨ Acknowledgments
 
@@ -331,7 +327,7 @@ This project is licensed under the **[MIT License](https://github.com/MA1002643/
 
 <p align="center">
   <strong>© 2025 Muhammad Abdullah</strong><br>
-  Developed with 💙 using Vue 3, Vite, Vue Router, Bootstrap, Express (Node.js) & SQLite<br>
+  Developed with 💙 using HTML, CSS and JavaScript<br>
   <a href="#top"><img alt="Back to Top" src="https://img.shields.io/badge/Back_to_Top-0A0A0A?style=for-the-badge">
 </a>
 </p>

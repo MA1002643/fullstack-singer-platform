@@ -233,7 +233,6 @@ This project simplifies building interactive singer websites with core features 
       </details>
    </details>
 
-
 </details>
 
 ---
@@ -241,6 +240,8 @@ This project simplifies building interactive singer websites with core features 
 <a id="getting-started"></a>
 
 ## 🚀 Getting Started
+
+<a id="prerequisites"></a>
 
 ### 📋 Prerequisites
 

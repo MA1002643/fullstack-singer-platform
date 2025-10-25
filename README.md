@@ -295,7 +295,7 @@ echo 'INSERT-TEST-COMMAND-HERE'
 
 <!-- CONTRIBUTORS:START -->
 <p align="left">
-
+<a href="https://github.com/MA1002643" title="MA1002643"><img src="https://images.weserv.nl/?url=avatars.githubusercontent.com%2Fu%2F87866666%3Fv%3D4%26s%3D96&w=48&h=48&fit=cover&mask=circle&border=white&borderwidth=2" alt="MA1002643" width="48" height="48" style="border-radius: 50%;"/></a>
 </p>
 <!-- CONTRIBUTORS:END -->
 

@@ -6,7 +6,7 @@ Thanks for your interest in contributing to **fullstack-singer-platform** 🎉 W
 
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
-- [Article Server — Community & Issue Hub](#article--server---community--issue-hub)
+- [fullstack paltform — Community & Issue Hub](#fullstack--platform--server---community--issue-hub)
   - [Purpose](#purpose)
   - [How to Contribute](#how-to-contribute)
     - [Reporting an Issue](#reporting-an-issue)
@@ -31,10 +31,10 @@ Please read and follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 ## 🧭 Getting Started
 
 - **💬 [Join the Discussions](https://github.com/MA1002643/fullstack-singer-platform/discussions)**: Share your insights, provide feedback, or ask questions about Vevox.
-- **🐛 [Report Issues](https://github.com/MA1002643/fullstack-singer-platform/issues)**: Submit bugs found or log feature requests for the `article-server-full-stack-blogging-platform` project.
+- **🐛 [Report Issues](https://github.com/MA1002643/fullstack-singer-platform/issues)**: Submit bugs found or log feature requests for the `fullstack-singer-platform` project.
 - **💡 [Submit Pull Requests](https://github.com/MA1002643/fullstack-singer-platform/pulls)**: Review open PRs, and submit your own PRs.
 
-<a id="article--server---community--issue-hub"></a>
+<a id="fullstack--platform---community--issue-hub"></a>
 
 ## 🗂️ Full Stack Singer Platform — Community & Issue Hub
 
@@ -48,7 +48,7 @@ This repository serves as a community space to:
 
 - Report bugs and unexpected behaviours in article server
 - Request new features or improvements
-- Propose integrations or ideas for extending Article Server (for example: MCP-style adapters, plugins, or example integrations)
+- Propose integrations or ideas for extending Full Stack Singer Platform (for example: MCP-style adapters, plugins, or example integrations)
 - Track the status of reported issues and feature requests
 
 <a id="how-to-contribute"></a>
@@ -76,7 +76,7 @@ This repository serves as a community space to:
 2. Use the Feature Request template
 3. Describe clearly:
    - The feature you'd like to see
-   - Why it would be valuable for Vevox users
+   - Why it would be valuable for full stack singer platform users
    - Any design/implementation ideas or trade-offs
 
 <a id="proposing-an-integration-or-extension"></a>
@@ -105,7 +105,7 @@ We use labels to indicate issue state. Common labels include:
 
 ## 🙌 Contributing Guide
 
-Thanks for considering contributing to Article Server! Below is a short, friendly guide to make it easy for first-time contributors.
+Thanks for considering contributing to the Full Stack Singer Platfrom! Below is a short, friendly guide to make it easy for first-time contributors.
 
 <a id="what-you-can-contribute"></a>
 

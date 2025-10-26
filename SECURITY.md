@@ -44,3 +44,12 @@ We will not pursue legal action for **good-faith** research that:
 - Respects privacy and does not exfiltrate data
 - Avoids service degradation
 - Gives us reasonable time to remediate before public disclosure
+
+#
+
+<p align="center">
+  <strong>© 2025 Muhammad Abdullah</strong><br>
+  Developed with 💙 using HTML, CSS and JavaScript<br>
+  <a href="#top"><img alt="Back to Top" src="https://img.shields.io/badge/Back_to_Top-0A0A0A?style=for-the-badge">
+</a>
+</p>

@@ -117,6 +117,15 @@ This project is a interactive singer websites with core features including:
 
 ```sh
 └── fullstack-singer-platform/
+├── docs/
+│   ├── adr/
+│   │   └── ADR-001-tech-stack.md
+│   ├── audit/
+│   │   ├── CODEBASE_AUDIT.md
+│   │   └── MIGRATION_PATH.md
+│   └── decisions/
+│       ├── DEC-001-licensing-catalogue.md
+│       └── DEC-002-infrastructure-cost.md
 ├── Singer Website/
 │   ├── HTML/
 │   │   ├── about.html

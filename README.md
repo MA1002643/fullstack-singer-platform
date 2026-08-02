@@ -210,6 +210,30 @@ This project is a interactive singer websites with core features including:
    </details>
 
    <details>
+      <summary><b>docs</b></summary>
+      <details>
+         <summary><b>adr</b></summary>
+      <ul>
+         <li><b><a href="docs/adr/ADR-001-tech-stack.md">ADR-001-tech-stack.md</a></b> — File.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>audit</b></summary>
+      <ul>
+         <li><b><a href="docs/audit/CODEBASE_AUDIT.md">CODEBASE_AUDIT.md</a></b> — File.</li>
+         <li><b><a href="docs/audit/MIGRATION_PATH.md">MIGRATION_PATH.md</a></b> — File.</li>
+      </ul>
+      </details>
+      <details>
+         <summary><b>decisions</b></summary>
+      <ul>
+         <li><b><a href="docs/decisions/DEC-001-licensing-catalogue.md">DEC-001-licensing-catalogue.md</a></b> — File.</li>
+         <li><b><a href="docs/decisions/DEC-002-infrastructure-cost.md">DEC-002-infrastructure-cost.md</a></b> — File.</li>
+      </ul>
+      </details>
+   </details>
+
+   <details>
       <summary><b>Singer Website</b></summary>
       <details>
          <summary><b>HTML</b></summary>

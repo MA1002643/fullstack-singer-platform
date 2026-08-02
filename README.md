@@ -3,22 +3,22 @@
 <!-- HEADER STYLE: CLASSIC -->
 <div align="center">
 
-<h1 align="center">FULLSTACK-SINGER-PLATFORM</h1>
+<h1 align="center">DHUN</h1>
 <p align="center"><em>Empowering Creators to Shine Brightly Online</em></p>
 
 <!-- BADGES -->
-<a href="https://github.com/MA1002643/fullstack-singer-platform/blob/main/LICENSE" alt="license">
+<a href="https://github.com/MA1002643/dhun/blob/main/LICENSE" alt="license">
    <img src="https://img.shields.io/badge/license-MIT-green?style=flat&logo=opensourceinitiative&logoColor=white" alt="MIT License" />
 </a>
-<img src="https://img.shields.io/github/last-commit/MA1002643/fullstack-singer-platform?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-<a href="https://github.com/MA1002643/fullstack-singer-platform/discussions" alt="Discussions">
-   <img src="https://img.shields.io/github/discussions/MA1002643/fullstack-singer-platform" alt="Discussions" />
+<img src="https://img.shields.io/github/last-commit/MA1002643/dhun?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+<a href="https://github.com/MA1002643/dhun/discussions" alt="Discussions">
+   <img src="https://img.shields.io/github/discussions/MA1002643/dhun" alt="Discussions" />
 </a>
-<a href="https://github.com/MA1002643/fullstack-singer-platform/stargazers">
-   <img src="https://custom-icon-badges.demolab.com/github/stars/MA1002643/fullstack-singer-platform?logo=star&style=flat" alt="stars" />
+<a href="https://github.com/MA1002643/dhun/stargazers">
+   <img src="https://custom-icon-badges.demolab.com/github/stars/MA1002643/dhun?logo=star&style=flat" alt="stars" />
 </a>
-<a href="https://github.com/MA1002643/fullstack-singer-platform/issues">
-   <img src="https://custom-icon-badges.demolab.com/github/issues-raw/MA1002643/fullstack-singer-platform?logo=issue" alt="issues" />
+<a href="https://github.com/MA1002643/dhun/issues">
+   <img src="https://custom-icon-badges.demolab.com/github/issues-raw/MA1002643/dhun?logo=issue" alt="issues" />
 </a>
 <br>
 <br>
@@ -67,7 +67,7 @@
 
 It is a **static, multi-page** project using **HTML, CSS, and JavaScript**, with dedicated pages (**About**, **Songs**, **Sign-Up**), shared styles, and a lightweight script for basic interactions and responsiveness.
 
-### Why fullstack-singer-platform?
+### Why Dhun?
 
 This project is a interactive singer websites with core features including:
 
@@ -116,7 +116,7 @@ This project is a interactive singer websites with core features including:
 ## 📁 Project Structure
 
 ```sh
-└── fullstack-singer-platform/
+└── dhun/
 ├── docs/
 │   ├── adr/
 │   │   └── ADR-001-tech-stack.md
@@ -160,7 +160,7 @@ This project is a interactive singer websites with core features including:
 ### 📑 Project Index
 
 <details open>
-   <summary><b>FULLSTACK-SINGER-PLATFORM/</b></summary>
+   <summary><b>DHUN/</b></summary>
    <details>
       <summary><b>__root__</b></summary>
       <ul>
@@ -292,18 +292,18 @@ This project requires the following dependencies:
 
 ### ⚙️ Installation
 
-Build fullstack-singer-platform from the source and install dependencies:
+Build dhun from the source and install dependencies:
 
 1. **Clone the repository:**
 
    ```sh
-   ❯ git clone https://github.com/MA1002643/fullstack-singer-platform
+   ❯ git clone https://github.com/MA1002643/dhun
    ```
 
 2. **Navigate to the project directory:**
 
    ```sh
-   ❯ cd fullstack-singer-platform
+   ❯ cd dhun
    ```
 
 <a id="usage"></a>
@@ -318,7 +318,7 @@ echo 'INSERT-RUN-COMMAND-HERE'
 
 ### 🧪 Testing
 
-Fullstack-singer-platform uses the {**test_framework**} test framework. Run the test suite with:
+Dhun uses the {**test_framework**} test framework. Run the test suite with:
 
 echo 'INSERT-TEST-COMMAND-HERE'
 
@@ -377,7 +377,7 @@ echo 'INSERT-TEST-COMMAND-HERE'
 
 ## 📜 License
 
-This project is licensed under the **[MIT License](https://github.com/MA1002643/fullstack-singer-platform/blob/main/LICENSE)**. See the **[LICENSE](https://choosealicense.com/licenses/)** file for full details.
+This project is licensed under the **[MIT License](https://github.com/MA1002643/dhun/blob/main/LICENSE)**. See the **[LICENSE](https://choosealicense.com/licenses/)** file for full details.
 
 #
 

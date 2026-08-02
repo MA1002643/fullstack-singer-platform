@@ -1,6 +1,6 @@
 # Security Policy
 
-We take security seriously for **fullstack-singer-platform**.
+We take security seriously for **dhun**.
 
 ## Supported Versions
 

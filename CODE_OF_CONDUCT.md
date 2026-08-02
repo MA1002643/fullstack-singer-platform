@@ -1,6 +1,6 @@
 # Contributor Covenant Code of Conduct
 
-_This Code of Conduct applies to the **[fullstack-singer-platform](https://github.com/MA1002643/fullstack-singer-platform)** project and all related community spaces._
+_This Code of Conduct applies to the **[dhun](https://github.com/MA1002643/dhun)** project and all related community spaces._
 
 ## Our Pledge
 

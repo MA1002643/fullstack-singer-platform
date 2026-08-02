@@ -88,8 +88,8 @@ No favicon, no manifest, no meta description, no Open Graph/social cards, no fon
 - **GitHub Actions (5):** `ci.yml` plus four README-automation workflows (contributors, project index,
   project structure, tech badges).
 - **Committed cruft:** `.DS_Store` ×2, `Singer Website/.vscode/settings.json`. **No `.gitignore`.**
-- **Naming mismatch:** local folder and README call the project `fullstack-singer-platform`; the origin
-  remote is `MA1002643/Singer-Website`.
+- **Naming mismatch (resolved 2026-08-02):** the project is now named **Dhun** — repo renamed from
+  `MA1002643/Singer-Website` to `MA1002643/dhun` (old URLs redirect); local folder renamed to `dhun`.
 
 **Defect M1 (CI is broken):** `ci.yml` runs `npm ci` on pull requests, but the repo has **no
 `package.json` or lockfile**, so every PR check fails. `npm run lint/test --if-present` are no-ops.

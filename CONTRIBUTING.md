@@ -6,7 +6,7 @@ Thanks for your interest in contributing to **dhun** 🎉 We welcome issues, fea
 
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
-- [fullstack paltform — Community & Issue Hub](#fullstack--platform--server---community--issue-hub)
+- [Dhun — Community & Issue Hub](#dhun---community--issue-hub)
   - [Purpose](#purpose)
   - [How to Contribute](#how-to-contribute)
     - [Reporting an Issue](#reporting-an-issue)
@@ -30,11 +30,11 @@ Please read and follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## 🧭 Getting Started
 
-- **💬 [Join the Discussions](https://github.com/MA1002643/dhun/discussions)**: Share your insights, provide feedback, or ask questions about Vevox.
+- **💬 [Join the Discussions](https://github.com/MA1002643/dhun/discussions)**: Share your insights, provide feedback, or ask questions about Dhun.
 - **🐛 [Report Issues](https://github.com/MA1002643/dhun/issues)**: Submit bugs found or log feature requests for the `dhun` project.
 - **💡 [Submit Pull Requests](https://github.com/MA1002643/dhun/pulls)**: Review open PRs, and submit your own PRs.
 
-<a id="fullstack--platform---community--issue-hub"></a>
+<a id="dhun---community--issue-hub"></a>
 
 ## 🗂️ Dhun — Community & Issue Hub
 

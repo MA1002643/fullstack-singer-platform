@@ -69,7 +69,7 @@ It is a **static, multi-page** project using **HTML, CSS, and JavaScript**, with
 
 ### Why Dhun?
 
-This project is a interactive singer websites with core features including:
+Dhun is an interactive artist site with core features including:
 
 - 🧩 **Responsive Navigation:** Mobile-friendly layout and menus for smooth navigation across devices.
 - 🎥 **Multimedia Integration:** Easy embedding of **YouTube** videos and images to showcase songs and artist visuals.
@@ -78,7 +78,7 @@ This project is a interactive singer websites with core features including:
 - ⚙️ **Lightweight UI Interactions:** Basic DOM manipulation via a single `app.js` script.  
   _Note: There is no server or database layer in this repository._
 - 🌟 **Multi-Page Structure:** Clear IA with **About**, **Songs**, and **Sign-Up** pages.
-- 🎨 **Consistent Styling:** Centralized CSS (`Singer Website/Public/style.css`) and image assets under `Singer Website/Public/images/`.
+- 🎨 **Consistent Styling:** Centralized CSS (`site/Public/style.css`) and image assets under `site/Public/images/`.
 
 ---
 
@@ -99,10 +99,10 @@ This project is a interactive singer websites with core features including:
 |     | Component          | Details                                                                                                                                                                                          |
 | :-- | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ⚙️  | **Architecture**   | <ul><li>Static multi-page site (**HTML/CSS/JavaScript**)</li><li>Pages: **index.html**, **About**, **Songs**, **Sign-Up**</li><li>No server or database code present in the repository</li></ul> |
-| 🔩  | **Code Quality**   | <ul><li>Single JS entry (**Singer Website/JavaScript/app.js**)</li><li>Clear separation of **HTML / CSS / JS** assets</li><li>Human-readable file and folder naming</li></ul>                    |
+| 🔩  | **Code Quality**   | <ul><li>Single JS entry (**site/JavaScript/app.js**)</li><li>Clear separation of **HTML / CSS / JS** assets</li><li>Human-readable file and folder naming</li></ul>                    |
 | 📄  | **Documentation**  | <ul><li>Project **README** with overview and structure</li><li>**CONTRIBUTING.md**, **CODE_OF_CONDUCT.md**, **SECURITY.md** included</li><li>MIT **LICENSE** file</li></ul>                      |
 | 🔌  | **Integrations**   | <ul><li>Embeds **YouTube** videos and images for media content</li><li>HTML forms for user sign-up (client-side only)</li></ul>                                                                  |
-| 🧩  | **Modularity**     | <ul><li>Per-page HTML with shared styles (**Singer Website/Public/style.css**)</li><li>Reusable DOM helpers in a single **app.js**</li></ul>                                                     |
+| 🧩  | **Modularity**     | <ul><li>Per-page HTML with shared styles (**site/Public/style.css**)</li><li>Reusable DOM helpers in a single **app.js**</li></ul>                                                     |
 | 🧪  | **Testing**        | <ul><li>No automated tests in the repository</li><li>Manual route/UI validation</li></ul>                                                                                                        |
 | ⚡️ | **Performance**    | <ul><li>Lightweight static assets</li><li>Client-side DOM updates for responsiveness</li></ul>                                                                                                   |
 | 🛡️  | **Security**       | <ul><li>Client-side input checks</li><li>No authentication or authorization logic present</li><li>**SECURITY.md** outlines reporting policy</li></ul>                                            |
@@ -126,7 +126,7 @@ This project is a interactive singer websites with core features including:
 │   └── decisions/
 │       ├── DEC-001-licensing-catalogue.md
 │       └── DEC-002-infrastructure-cost.md
-├── Singer Website/
+├── site/
 │   ├── HTML/
 │   │   ├── about.html
 │   │   ├── sign-up.html
@@ -234,38 +234,38 @@ This project is a interactive singer websites with core features including:
    </details>
 
    <details>
-      <summary><b>Singer Website</b></summary>
+      <summary><b>site</b></summary>
       <details>
          <summary><b>HTML</b></summary>
       <ul>
-         <li><b><a href="Singer Website/HTML/about.html">about.html</a></b> — HTML page.</li>
-         <li><b><a href="Singer Website/HTML/sign-up.html">sign-up.html</a></b> — HTML page.</li>
-         <li><b><a href="Singer Website/HTML/songs.html">songs.html</a></b> — HTML page.</li>
+         <li><b><a href="site/HTML/about.html">about.html</a></b> — HTML page.</li>
+         <li><b><a href="site/HTML/sign-up.html">sign-up.html</a></b> — HTML page.</li>
+         <li><b><a href="site/HTML/songs.html">songs.html</a></b> — HTML page.</li>
       </ul>
       </details>
       <details>
          <summary><b>JavaScript</b></summary>
       <ul>
-         <li><b><a href="Singer Website/JavaScript/app.js">app.js</a></b> — JavaScript file.</li>
+         <li><b><a href="site/JavaScript/app.js">app.js</a></b> — JavaScript file.</li>
       </ul>
       </details>
       <details>
          <summary><b>Public</b></summary>
       <ul>
-         <li><b><a href="Singer Website/Public/style.css">style.css</a></b> — Stylesheet.</li>
+         <li><b><a href="site/Public/style.css">style.css</a></b> — Stylesheet.</li>
       </ul>
       <details>
          <summary><b>images</b></summary>
       <ul>
-         <li><b><a href="Singer Website/Public/images/Background_image.jpg">Background_image.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image1.jpg">image1.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image2.jpg">image2.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image3.jpg">image3.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image4.jpg">image4.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image5.jpg">image5.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image6.jpg">image6.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/image7.jpg">image7.jpg</a></b> — File.</li>
-         <li><b><a href="Singer Website/Public/images/test_image.jpeg">test_image.jpeg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/Background_image.jpg">Background_image.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image1.jpg">image1.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image2.jpg">image2.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image3.jpg">image3.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image4.jpg">image4.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image5.jpg">image5.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image6.jpg">image6.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/image7.jpg">image7.jpg</a></b> — File.</li>
+         <li><b><a href="site/Public/images/test_image.jpeg">test_image.jpeg</a></b> — File.</li>
       </ul>
       </details>
       </details>

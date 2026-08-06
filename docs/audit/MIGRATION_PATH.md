@@ -26,7 +26,8 @@ snapshots of both.
 Rebuild Home, About, Songs (YouTube embeds preserved), and Sign-up (posting to *our own* API stub that
 stores mailing-list intent) in `apps/web`. Verify parity with visual regression + Lighthouse ≥ 95.
 **Cutover:** production DNS/hosting flips to `apps/web`; `apps/legacy` stays in-tree, servable as an
-instant rollback for one release cycle, then is archived. Old `/Singer Website/...` URLs get redirects.
+instant rollback for one release cycle, then is archived. Legacy URLs get redirects: the current
+`/site/...` paths and the pre-rename `/Singer Website/...` scheme (named here only as a redirect source).
 **Exit criteria:** production runs the new shell with identical content and brand; rollback tested.
 
 ## Stage 3 — Backend core + catalogue (invisible to visitors)
